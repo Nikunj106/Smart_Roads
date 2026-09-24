@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Makes the website responsive on phones and tablets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Browser tab title -->
+    <title>SmartRoad — Report. Track. Fix.</title>
+
+    <!--
+        Leaflet is used for the interactive map.
+        Leaflet is free and open-source.
+    -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- Overpass (highway-signage heritage) for display type, Inter for body copy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!--
+        Main SmartRoad stylesheet.
+        Design language: asphalt, lane paint, mile markers and signage.
+    -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- =========================================================
+         NAVIGATION BAR
+         ========================================================= -->
+
+    <header class="navbar" id="navbar">
+
+        <!-- Website logo / brand -->
+        <a href="index.html" class="brand">
+            <span class="brand-mark">SR</span>
+
+            <span class="brand-text">
+                <strong>Smart</strong>Road
+            </span>
+        </a>
+
+        <!--
+            Main navigation.
+            The links scroll to the three major sections
+            on the homepage.
+        -->
+        <nav class="nav-links" id="nav-links">
+
+            <a href="#report">Report</a>
+
+            <a href="#traffic">Traffic</a>
+
+            <a href="#map-section">Map</a>
+
+            <a href="issues.html">Issues</a>
+
+        </nav>
+
+        <!-- Main call-to-action button -->
+        <a href="report.html" class="nav-button">
+            + Report issue
+        </a>
+
+        <!-- Mobile menu toggle -->
+        <button
+            type="button"
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="nav-links"
+        >
+            <span></span>
+        </button>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO SECTION
+         ========================================================= -->
+
+    <main id="main-content">
+
+        <section class="hero">
+
+            <!-- Left side of hero -->
+            <div class="hero-content">
+
+                <!-- Small label above heading -->
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    Citizen road monitor
+                </div>
+
+                <!-- Main website heading -->
+                <h1>
+                    EVERY POTHOLE
+                    <span>HAS A PAPER TRAIL.</span>
+                </h1>
+
+                <!-- Supporting text -->
+                <p class="hero-description">
+                    Spot a pothole, a broken streetlight, or a dangerous
+                    stretch of road? Report it in under a minute, watch it
+                    land on the map, and follow it through to a fix.
+                </p>
+
+                <!-- Hero buttons -->
+                <div class="hero-actions">
+
+                    <a href="#report" class="button button-primary">
+                        Report a problem
+                    </a>
+
+                    <a href="#map-section" class="button button-secondary">
+                        View live map
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Right side of hero -->
+            <div class="hero-card">
+
+                <!-- Decorative top bar -->
+                <div class="card-top">
+
+                    <span>Delhi // live</span>
+
+                    <span class="live-indicator">
+                        <span></span>
+                        Live
+                    </span>
+
+                </div>
+
+
+                <!-- Fake road-monitor visual -->
+                <div class="road-visual">
+
+                    <div class="road-label">
+                        Road status
+                    </div>
+
+                    <div class="road-number">
+                        87%
+                    </div>
+
+                    <div class="road-status">
+                        Monitoring active
+                    </div>
+
+                    <!-- Decorative road -->
+                    <div class="road">
+
+                        <div class="road-line"></div>
+                        <div class="road-line"></div>
+                        <div class="road-line"></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Small statistics -->
+                <div class="hero-card-stats">
+
+                    <div>
+                        <strong id="hero-report-count">0</strong>
+                        <span>Reports</span>
+                    </div>
+
+                    <div>
+                        <strong>24/7</strong>
+                        <span>Monitoring</span>
+                    </div>
+
+                    <div>
+                        <strong>Live</strong>
+                        <span>Map</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK STATS
+             ===================================================== -->
+
+        <section class="stats-bar">
+
+            <div class="stat-item">
+
+                <span class="stat-number" id="total-reports">
+                    0
+                </span>
+
+                <span class="stat-label">
+                    Total reports
+                </span>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span class="stat-number" id="open-reports">
+                    0
+                </span>
+
+                <span class="stat-label">
+                    Open issues
+                </span>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span class="stat-number" id="fixed-reports">
+                    0
+                </span>
+
+                <span class="stat-label">
+                    Fixed
+                </span>
+
+            </div>
+
+
+            <div class="stat-item highlight">
+
+                <span class="stat-number">
+                    Live
+                </span>
+
+                <span class="stat-label">
+                    City monitor
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             SECTION 1 — REPORT
+             ========================================================= -->
+
+        <section id="report" class="content-section report-section">
+
+            <!-- Section heading -->
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-number">01</span>
+
+                    <h2>
+                        See it?
+                        <span>Report it.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    One report can help identify dangerous roads,
+                    damaged infrastructure and problems that need attention.
+                </p>
+
+            </div>
+
+
+            <!-- Report content -->
+            <div class="report-grid">
+
+                <!-- Information card -->
+                <div class="info-panel">
+
+                    <div class="panel-tag">
+                        Citizen input
+                    </div>
+
+                    <h3>
+                        Your street. Your voice.
+                    </h3>
+
+                    <p>
+                        Quickly report road problems with their location,
+                        severity and description. Your report is stored and
+                        displayed on the SmartRoad issue map.
+                    </p>
+
+
+                    <!-- Report features -->
+                    <div class="feature-list">
+
+                        <div class="feature-item">
+
+                            <span class="feature-icon">01</span>
+
+                            <div>
+                                <strong>Select the problem</strong>
+
+                                <p>
+                                    Pothole, traffic light, streetlight,
+                                    flooding or another road issue.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="feature-item">
+
+                            <span class="feature-icon">02</span>
+
+                            <div>
+                                <strong>Add the location</strong>
+
+                                <p>
+                                    Use your current location or enter
+                                    the affected area manually.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="feature-item">
+
+                            <span class="feature-icon">03</span>
+
+                            <div>
+                                <strong>Submit the report</strong>
+
+                                <p>
+                                    Your report appears in the SmartRoad
+                                    issue system right away.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Link to report page -->
+                    <a href="report.html" class="button button-primary">
+                        + Create report
+                    </a>
+
+                </div>
+
+
+                <!-- Visual report preview -->
+                <div class="report-preview">
+
+                    <div class="preview-header">
+
+                        <span>
+                            new_report.sr
+                        </span>
+
+                        <span>
+                            ● rec
+                        </span>
+
+                    </div>
+
+
+                    <div class="preview-body">
+
+                        <div class="preview-row">
+
+                            <span>Type</span>
+
+                            <strong>
+                                Pothole
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-row">
+
+                            <span>Severity</span>
+
+                            <strong class="yellow-text">
+                                High
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-row">
+
+                            <span>Location</span>
+
+                            <strong>
+                                Delhi
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-description">
+
+                            <span>Description</span>
+
+                            <p>
+                                Large pothole affecting two lanes.
+                                Requires immediate attention.
+                            </p>
+
+                        </div>
+
+
+                        <div class="preview-button">
+                            Submit report →
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             SECTION 2 — TRAFFIC
+             ========================================================= -->
+
+        <section id="traffic" class="content-section traffic-section">
+
+            <!-- Section heading -->
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-number">02</span>
+
+                    <h2>
+                        Current
+                        <span>hotspots.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    A simple traffic overview showing areas that may
+                    require attention.
+                </p>
+
+            </div>
+
+
+            <!-- Traffic dashboard -->
+            <div class="traffic-dashboard">
+
+                <!-- Dashboard header -->
+                <div class="dashboard-header">
+
+                    <div>
+                        <span class="panel-tag">
+                            Traffic monitor
+                        </span>
+
+                        <h3>
+                            Delhi road network
+                        </h3>
+                    </div>
+
+                    <div>
+                        <div class="dashboard-live">
+                            ● Live data — TomTom
+                        </div>
+                        <div id="traffic-updated" class="traffic-updated">
+                            Loading…
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!--
+                    Traffic rows.
+                    Each row carries data-lat / data-lon so
+                    script.js can request live congestion for
+                    that exact point from the TomTom Traffic
+                    Flow API. Bars start empty and fill in once
+                    the first live reading arrives.
+                -->
+                <div class="traffic-list">
+
+                    <!-- Traffic item 1 -->
+                    <div class="traffic-row" data-lat="28.6289" data-lon="77.2410">
+
+                        <div class="traffic-location">
+
+                            <span class="traffic-index">
+                                01
+                            </span>
+
+                            <div>
+                                <strong>
+                                    ITO
+                                </strong>
+
+                                <small>
+                                    Ring Road
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="traffic-bar">
+
+                            <div
+                                class="traffic-progress"
+                                style="width: 0%;"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="traffic-status">
+                            Loading…
+                        </div>
+
+                    </div>
+
+
+                    <!-- Traffic item 2 -->
+                    <div class="traffic-row" data-lat="28.6315" data-lon="77.2167">
+
+                        <div class="traffic-location">
+
+                            <span class="traffic-index">
+                                02
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Connaught Place
+                                </strong>
+
+                                <small>
+                                    Central Delhi
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="traffic-bar">
+
+                            <div
+                                class="traffic-progress"
+                                style="width: 0%;"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="traffic-status">
+                            Loading…
+                        </div>
+
+                    </div>
+
+
+                    <!-- Traffic item 3 -->
+                    <div class="traffic-row" data-lat="28.7041" data-lon="77.1025">
+
+                        <div class="traffic-location">
+
+                            <span class="traffic-index">
+                                03
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Rohini
+                                </strong>
+
+                                <small>
+                                    Outer Ring Road
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="traffic-bar">
+
+                            <div
+                                class="traffic-progress"
+                                style="width: 0%;"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="traffic-status">
+                            Loading…
+                        </div>
+
+                    </div>
+
+
+                    <!-- Traffic item 4 -->
+                    <div class="traffic-row" data-lat="28.5921" data-lon="77.0460">
+
+                        <div class="traffic-location">
+
+                            <span class="traffic-index">
+                                04
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Dwarka
+                                </strong>
+
+                                <small>
+                                    Sector 10
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="traffic-bar">
+
+                            <div
+                                class="traffic-progress"
+                                style="width: 0%;"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="traffic-status">
+                            Loading…
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Traffic disclaimer -->
+                <div class="traffic-note">
+
+                    <span>!</span>
+
+                    <p>
+                        Congestion levels above are live readings from
+                        TomTom's Traffic API, based on current vs.
+                        free-flow speed at each point. If a reading
+                        can't be fetched, the row shows "Unavailable"
+                        instead of guessing.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             SECTION 3 — MAP
+             ========================================================= -->
+
+        <section
+            id="map-section"
+            class="content-section map-section"
+        >
+
+            <!-- Section heading -->
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-number">03</span>
+
+                    <h2>
+                        Every problem
+                        <span>has a location.</span>
+                    </h2>
+                </div>
+
+                <p>
+                    Explore reported road problems on the interactive
+                    SmartRoad map.
+                </p>
+
+            </div>
+
+
+            <!-- Map container -->
+            <div class="map-panel">
+
+                <!-- Map toolbar -->
+                <div class="map-toolbar">
+
+                    <div class="map-title">
+
+                        <span class="map-pulse"></span>
+
+                        SmartRoad issue map
+
+                    </div>
+
+
+                    <div class="map-info">
+
+                        <span>
+                            Reports:
+                        </span>
+
+                        <strong id="map-report-count">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!--
+                    Leaflet will automatically create the interactive
+                    map inside this element.
+                -->
+                <div id="city-map"></div>
+
+
+                <!-- Map legend -->
+                <div class="map-legend">
+
+                    <div class="legend-title">
+                        Priority
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot critical"></span>
+
+                        Critical
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot high"></span>
+
+                        High
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot low"></span>
+
+                        Low
+
+                    </div>
+
+                    <div class="legend-item legend-attribution">
+                        Live traffic data © TomTom
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Map actions -->
+            <div class="map-actions">
+
+                <div>
+
+                    <strong>
+                        Want to see every issue?
+                    </strong>
+
+                    <p>
+                        Open the full issue dashboard to filter
+                        reports by type, severity and status.
+                    </p>
+
+                </div>
+
+
+                <a href="issues.html" class="button button-secondary">
+                    View all issues →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             HOW IT WORKS
+             ========================================================= -->
+
+        <section class="how-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-number">04</span>
+
+                    <h2>
+                        How it
+                        <span>works.</span>
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="steps-grid">
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                        01
+                    </span>
+
+                    <h3>
+                        Spot
+                    </h3>
+
+                    <p>
+                        Notice a pothole, damaged signal,
+                        flooding or another road problem.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                        02
+                    </span>
+
+                    <h3>
+                        Report
+                    </h3>
+
+                    <p>
+                        Submit the issue with its location,
+                        severity and description.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Track
+                    </h3>
+
+                    <p>
+                        See reported problems on the map
+                        and monitor their status.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span class="step-number">
+                        04
+                    </span>
+
+                    <h3>
+                        Fix
+                    </h3>
+
+                    <p>
+                        Use the collected information to
+                        prioritize road improvements.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             FINAL CALL TO ACTION
+             ========================================================= -->
+
+        <section class="cta-section">
+
+            <div class="cta-content">
+
+                <span class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    Build better roads
+                </span>
+
+                <h2>
+                    Your report
+                    <span>matters.</span>
+                </h2>
+
+                <p>
+                    Help make your city safer, smarter and easier
+                    to navigate — one road issue at a time.
+                </p>
+
+                <a href="report.html" class="button button-primary">
+                    Report a road problem →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-brand">
+
+            <span class="brand-mark">
+                SR
+            </span>
+
+            <strong>
+                SmartRoad
+            </strong>
+
+        </div>
+
+
+        <p>
+            Citizen-powered road intelligence.
+        </p>
+
+
+        <div class="footer-links">
+
+            <a href="#report">
+                Report
+            </a>
+
+            <a href="#traffic">
+                Traffic
+            </a>
+
+            <a href="#map-section">
+                Map
+            </a>
+
+            <a href="issues.html">
+                Issues
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         LEAFLET JAVASCRIPT
+         =========================================================
+
+         Leaflet provides the interactive map functionality.
+         It must be loaded BEFORE script.js because script.js
+         uses the global Leaflet object "L".
+         ========================================================= -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!--
+        Our custom JavaScript.
+
+        This handles:
+        - localStorage reports
+        - homepage statistics
+        - interactive map
+        - report markers
+        - geolocation
+        - issue management
+        - mobile navigation
+        - toast notifications
+    -->
+    <script src="script.js"></script>
+
+</body>
+</html>

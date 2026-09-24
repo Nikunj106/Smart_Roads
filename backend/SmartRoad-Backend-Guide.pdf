@@ -1,0 +1,91 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 1374 >>
+stream
+BT
+/F1 18 Tf
+72 760 Td
+(SMARTROAD BACKEND GUIDE) Tj
+/F1 11 Tf
+0 -21 Td
+() Tj
+0 -21 Td
+(Purpose) Tj
+0 -21 Td
+(The backend stores road issue reports centrally and serves the site.) Tj
+0 -21 Td
+() Tj
+0 -21 Td
+(Run) Tj
+0 -21 Td
+(1. Install Python 3.10 or newer.) Tj
+0 -21 Td
+(2. In the project folder: python backend/server.py) Tj
+0 -21 Td
+(3. Open http://127.0.0.1:8000) Tj
+0 -21 Td
+() Tj
+0 -21 Td
+(Data) Tj
+0 -21 Td
+(Reports persist in backend/data/reports.json.) Tj
+0 -21 Td
+(The frontend loads from the API and saves changes to it automatically.) Tj
+0 -21 Td
+(If the API is unavailable, browser localStorage remains a fallback.) Tj
+0 -21 Td
+() Tj
+0 -21 Td
+(Endpoints) Tj
+0 -21 Td
+(GET /api/health - health check) Tj
+0 -21 Td
+(GET /api/reports - list reports; supports problemType, severity, status) Tj
+0 -21 Td
+(POST /api/reports - create a report) Tj
+0 -21 Td
+(PUT /api/reports - replace collection \(used by current UI\)) Tj
+0 -21 Td
+(GET, PATCH, DELETE /api/reports/{id} - manage one report) Tj
+0 -21 Td
+(DELETE /api/reports - clear all reports) Tj
+0 -21 Td
+(GET /api/stats - dashboard totals) Tj
+0 -21 Td
+() Tj
+0 -21 Td
+(Safety) Tj
+0 -21 Td
+(The API validates issue values, required text, coordinate types and images.) Tj
+0 -21 Td
+(Images are capped at 2 MB. For production use a database, object storage,) Tj
+0 -21 Td
+(authentication, restricted CORS, and HTTPS.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000001611 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1737
+%%EOF

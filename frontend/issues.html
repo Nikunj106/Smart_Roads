@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!-- Makes the dashboard responsive on smaller screens -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Browser tab title -->
+<title>SmartRoad — Road Issues</title>
+<!-- Overpass + Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+    Main SmartRoad stylesheet.
+    Design language: asphalt, lane paint, mile markers and signage.
+-->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<!-- =========================================================
+     NAVIGATION BAR
+     ========================================================= -->
+<header class="navbar" id="navbar">
+    <!-- SmartRoad brand -->
+    <a href="index.html" class="brand">
+        <span class="brand-mark">
+            SR
+        </span>
+        <span class="brand-text">
+            <strong>Smart</strong>Road
+        </span>
+    </a>
+    <!-- Main navigation -->
+    <nav class="nav-links" id="nav-links">
+        <a href="index.html#report">
+            Report
+        </a>
+        <a href="index.html#traffic">
+            Traffic
+        </a>
+        <a href="index.html#map-section">
+            Map
+        </a>
+        <!-- Current page -->
+        <a href="issues.html" class="active">
+            Issues
+        </a>
+    </nav>
+    <!-- Report button -->
+    <a href="report.html" class="nav-button">
+        + Report issue
+    </a>
+    <!-- Mobile menu toggle -->
+    <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-links"
+    >
+        <span></span>
+    </button>
+</header>
+<!-- =========================================================
+     MAIN ISSUES DASHBOARD
+     ========================================================= -->
+<main class="issues-page" id="main-content">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+    <section class="page-header">
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Road issue database
+        </div>
+        <h1>
+            Find the
+            <span>problems.</span>
+        </h1>
+        <p>
+            Browse road issues reported by citizens.
+            Filter the database by problem type, severity and status.
+        </p>
+    </section>
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+    <section class="issue-stats">
+        <!-- Total reports -->
+        <div class="issue-stat-card">
+            <span class="issue-stat-label">
+                Total reports
+            </span>
+            <strong id="total-reports">
+                0
+            </strong>
+            <span class="issue-stat-description">
+                All submissions
+            </span>
+        </div>
+        <!-- Open reports -->
+        <div class="issue-stat-card">
+            <span class="issue-stat-label">
+                Open
+            </span>
+            <strong id="open-reports">
+                0
+            </strong>
+            <span class="issue-stat-description">
+                Need attention
+            </span>
+        </div>
+        <!-- Critical reports -->
+        <div class="issue-stat-card warning">
+            <span class="issue-stat-label">
+                Critical
+            </span>
+            <strong id="critical-reports">
+                0
+            </strong>
+            <span class="issue-stat-description">
+                High priority
+            </span>
+        </div>
+        <!-- Fixed reports -->
+        <div class="issue-stat-card success">
+            <span class="issue-stat-label">
+                Fixed
+            </span>
+            <strong id="fixed-reports">
+                0
+            </strong>
+            <span class="issue-stat-description">
+                Resolved
+            </span>
+        </div>
+    </section>
+    <!-- =====================================================
+         FILTERS
+         ===================================================== -->
+    <section class="filters-panel">
+        <div class="filters-heading">
+            <div>
+                <span class="panel-tag">
+                    Filter database
+                </span>
+                <h2>
+                    Issue
+                    <span>filters</span>
+                </h2>
+            </div>
+            <div class="filter-actions">
+                <button
+                    type="button"
+                    id="clear-reports"
+                    class="button button-small button-danger"
+                >
+                    Clear data
+                </button>
+            </div>
+        </div>
+        <!-- Filter controls -->
+        <div class="filter-grid">
+            <!-- Problem type filter -->
+            <div class="filter-group">
+                <label for="filter-type">
+                    Problem type
+                </label>
+                <select id="filter-type">
+                    <option value="all">
+                        All types
+                    </option>
+                    <option value="Pothole">
+                        Pothole
+                    </option>
+                    <option value="Broken Streetlight">
+                        Broken streetlight
+                    </option>
+                    <option value="Traffic Signal">
+                        Traffic signal
+                    </option>
+                    <option value="Road Damage">
+                        Road damage
+                    </option>
+                    <option value="Flooding">
+                        Flooding / waterlogging
+                    </option>
+                    <option value="Debris">
+                        Road debris
+                    </option>
+                    <option value="Other">
+                        Other
+                    </option>
+                </select>
+            </div>
+            <!-- Severity filter -->
+            <div class="filter-group">
+                <label for="filter-severity">
+                    Severity
+                </label>
+                <select id="filter-severity">
+                    <option value="all">
+                        All severities
+                    </option>
+                    <option value="Critical">
+                        Critical
+                    </option>
+                    <option value="High">
+                        High
+                    </option>
+                    <option value="Medium">
+                        Medium
+                    </option>
+                    <option value="Low">
+                        Low
+                    </option>
+                </select>
+            </div>
+            <!-- Status filter -->
+            <div class="filter-group">
+                <label for="filter-status">
+                    Status
+                </label>
+                <select id="filter-status">
+                    <option value="all">
+                        Active issues
+                    </option>
+                    <option value="Open">
+                        Open
+                    </option>
+                    <option value="In Progress">
+                        In progress
+                    </option>
+                    <option value="Fixed">
+                        Fixed
+                    </option>
+                </select>
+            </div>
+        </div>
+    </section>
+    <!-- =====================================================
+         ISSUE LIST
+         ===================================================== -->
+    <section class="issues-section">
+        <div class="issues-heading">
+            <div>
+                <span class="section-number">
+                    ⌗
+                </span>
+                <h2>
+                    Active
+                    <span>issues.</span>
+                </h2>
+            </div>
+            <!-- Number of currently visible reports -->
+            <div class="results-count">
+                <span>
+                    Showing
+                </span>
+                <strong id="results-count">
+                    0
+                </strong>
+            </div>
+        </div>
+        <!--
+            script.js dynamically creates the individual
+            issue cards inside this container.
+            Each card can contain:
+            - problem type
+            - severity
+            - location
+            - description
+            - priority
+            - status
+            - timestamp
+            - optional image
+        -->
+        <div
+            id="reports-container"
+            class="reports-grid"
+        ></div>
+        <!--
+            This message is shown when there are no reports
+            matching the selected filters.
+        -->
+        <div
+            id="no-reports"
+            class="no-reports"
+        >
+            <div class="no-reports-icon">
+                //
+            </div>
+            <h3>
+                No reports found
+            </h3>
+            <p>
+                There are no road issues matching the
+                current filters.
+            </p>
+            <a
+                href="report.html"
+                class="button button-primary"
+            >
+                + Report an issue
+            </a>
+        </div>
+    </section>
+    <!-- =====================================================
+         INFORMATION BANNER
+         ===================================================== -->
+    <section class="issues-info-banner">
+        <div class="info-banner-icon">
+            !
+        </div>
+        <div>
+            <strong>
+                How priority works
+            </strong>
+            <p>
+                SmartRoad calculates an issue priority using
+                factors such as severity and problem type.
+                Critical safety problems receive the highest priority.
+            </p>
+        </div>
+    </section>
+    <!-- =====================================================
+         BOTTOM ACTIONS
+         ===================================================== -->
+    <section class="issues-bottom-actions">
+        <a
+            href="index.html#map-section"
+            class="button button-secondary"
+        >
+            ← View issue map
+        </a>
+        <a
+            href="report.html"
+            class="button button-primary"
+        >
+            + Report new issue
+        </a>
+    </section>
+</main>
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="footer">
+    <div class="footer-brand">
+        <span class="brand-mark">
+            SR
+        </span>
+        <strong>
+            SmartRoad
+        </strong>
+    </div>
+    <p>
+        Citizen-powered road intelligence.
+    </p>
+    <div class="footer-links">
+        <a href="index.html#report">
+            Report
+        </a>
+        <a href="index.html#traffic">
+            Traffic
+        </a>
+        <a href="index.html#map-section">
+            Map
+        </a>
+        <a href="issues.html">
+            Issues
+        </a>
+    </div>
+</footer>
+<!--
+    Shared JavaScript.
+    script.js handles:
+    - loading reports
+    - filtering reports
+    - calculating statistics
+    - generating issue cards
+    - clearing localStorage
+    - mobile navigation
+    - toast notifications
+-->
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Makes the page responsive on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Browser tab title -->
+    <title>SmartRoad — Report an Issue</title>
+    <!-- Overpass + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--
+        Main SmartRoad stylesheet.
+        Design language: asphalt, lane paint, mile markers and signage.
+    -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<!-- =========================================================
+     NAVIGATION BAR
+     ========================================================= -->
+<header class="navbar" id="navbar">
+    <!-- SmartRoad logo -->
+    <a href="index.html" class="brand">
+        <span class="brand-mark">
+            SR
+        </span>
+        <span class="brand-text">
+            <strong>Smart</strong>Road
+        </span>
+    </a>
+    <!-- Main navigation -->
+    <nav class="nav-links" id="nav-links">
+        <a href="index.html#report">
+            Report
+        </a>
+        <a href="index.html#traffic">
+            Traffic
+        </a>
+        <a href="index.html#map-section">
+            Map
+        </a>
+        <a href="issues.html">
+            Issues
+        </a>
+    </nav>
+    <!-- Current-page indicator -->
+    <a href="report.html" class="nav-button active">
+        + Report issue
+    </a>
+    <!-- Mobile menu toggle -->
+    <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-links"
+    >
+        <span></span>
+    </button>
+</header>
+<!-- =========================================================
+     MAIN REPORT PAGE
+     ========================================================= -->
+<main class="report-page" id="main-content">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+    <section class="page-header">
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Citizen report
+        </div>
+        <h1>
+            Report a
+            <span>road issue.</span>
+        </h1>
+        <p>
+            Tell us what is wrong, where it happened and how serious
+            the problem is. Your report will appear on the SmartRoad
+            issue dashboard and map.
+        </p>
+    </section>
+    <!-- =====================================================
+         REPORT FORM LAYOUT
+         ===================================================== -->
+    <section class="report-form-layout">
+        <!-- =================================================
+             LEFT INFORMATION PANEL
+             ================================================= -->
+        <aside class="form-sidebar">
+            <div class="sidebar-card">
+                <span class="panel-tag">
+                    How it works
+                </span>
+                <h2>
+                    Report.
+                    <span>Track.</span>
+                    Fix.
+                </h2>
+                <p>
+                    Every report helps build a clearer picture
+                    of road conditions across the city.
+                </p>
+                <!-- Step 1 -->
+                <div class="sidebar-step">
+                    <span>
+                        01
+                    </span>
+                    <div>
+                        <strong>
+                            Describe
+                        </strong>
+                        <p>
+                            Select the type and severity of
+                            the road problem.
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="sidebar-step">
+                    <span>
+                        02
+                    </span>
+                    <div>
+                        <strong>
+                            Locate
+                        </strong>
+                        <p>
+                            Tell us where the problem
+                            is located.
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="sidebar-step">
+                    <span>
+                        03
+                    </span>
+                    <div>
+                        <strong>
+                            Submit
+                        </strong>
+                        <p>
+                            Add optional evidence and
+                            send your report.
+                        </p>
+                    </div>
+                </div>
+                <!-- Link to existing reports -->
+                <a href="issues.html" class="sidebar-link">
+                    View existing reports →
+                </a>
+            </div>
+            <!-- Important note -->
+            <div class="sidebar-alert">
+                <span>
+                    !
+                </span>
+                <div>
+                    <strong>
+                        Be specific
+                    </strong>
+                    <p>
+                        Accurate locations and descriptions
+                        make reports more useful.
+                    </p>
+                </div>
+            </div>
+        </aside>
+        <!-- =================================================
+             REPORT FORM
+             ================================================= -->
+        <div class="form-panel">
+            <!--
+                The form is handled by script.js.
+                JavaScript:
+                - validates the form
+                - stores the report in localStorage
+                - calculates priority
+                - adds the report to the map
+                - clears the form after submission
+            -->
+            <form id="report-form">
+                <!-- =========================================
+                     SECTION A — PROBLEM DETAILS
+                     ========================================= -->
+                <div class="form-section">
+                    <div class="form-section-heading">
+                        <span>
+                            01
+                        </span>
+                        <div>
+                            <h2>
+                                Problem details
+                            </h2>
+                            <p>
+                                What did you find?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Problem type -->
+                    <div class="form-group">
+                        <label for="problem-type">
+                            Problem type
+                            <span>*</span>
+                        </label>
+                        <select
+                            id="problem-type"
+                            name="problemType"
+                            required
+                        >
+                            <option value="">
+                                Select a problem
+                            </option>
+                            <option value="Pothole">
+                                Pothole
+                            </option>
+                            <option value="Broken Streetlight">
+                                Broken streetlight
+                            </option>
+                            <option value="Traffic Signal">
+                                Traffic signal
+                            </option>
+                            <option value="Road Damage">
+                                Road damage
+                            </option>
+                            <option value="Flooding">
+                                Flooding / waterlogging
+                            </option>
+                            <option value="Debris">
+                                Road debris
+                            </option>
+                            <option value="Other">
+                                Other
+                            </option>
+                        </select>
+                    </div>
+                    <!-- Severity -->
+                    <div class="form-group">
+                        <label for="severity">
+                            Severity
+                            <span>*</span>
+                        </label>
+                        <select
+                            id="severity"
+                            name="severity"
+                            required
+                        >
+                            <option value="">
+                                Select severity
+                            </option>
+                            <option value="Low">
+                                Low — minor issue
+                            </option>
+                            <option value="Medium">
+                                Medium — needs attention
+                            </option>
+                            <option value="High">
+                                High — safety concern
+                            </option>
+                            <option value="Critical">
+                                Critical — immediate danger
+                            </option>
+                        </select>
+                    </div>
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">
+                            Description
+                            <span>*</span>
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="6"
+                            maxlength="500"
+                            placeholder="Describe what happened, what the road condition looks like and how it affects traffic..."
+                            required
+                        ></textarea>
+                        <div class="input-hint">
+                            Max 500 characters
+                        </div>
+                    </div>
+                </div>
+                <!-- =========================================
+                     SECTION B — LOCATION
+                     ========================================= -->
+                <div class="form-section">
+                    <div class="form-section-heading">
+                        <span>
+                            02
+                        </span>
+                        <div>
+                            <h2>
+                                Location
+                            </h2>
+                            <p>
+                                Where is the problem?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Area -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="area">
+                                Area / locality
+                                <span>*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="area"
+                                name="area"
+                                placeholder="e.g. Connaught Place"
+                                required
+                            >
+                        </div>
+                        <!-- City -->
+                        <div class="form-group">
+                            <label for="city">
+                                City
+                                <span>*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                value="Delhi"
+                                placeholder="e.g. Delhi"
+                                required
+                            >
+                        </div>
+                    </div>
+                    <!-- Geolocation -->
+                    <div class="location-box">
+                        <div class="location-icon">
+                            GPS
+                        </div>
+                        <div class="location-text">
+                            <strong>
+                                Use my current location
+                            </strong>
+                            <p>
+                                Optional. Allow browser location access,
+                                or enter an area and city above to place
+                                the report on the map.
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            id="get-location"
+                            class="button button-small"
+                        >
+                            Get location
+                        </button>
+                    </div>
+                    <!-- Coordinates are filled by JavaScript -->
+                    <div
+                        id="location-status"
+                        class="location-status"
+                    >
+                        Location not set
+                    </div>
+                    <!--
+                        Hidden coordinate fields.
+                        script.js fills these values when the user
+                        successfully uses browser geolocation.
+                    -->
+                    <input
+                        type="hidden"
+                        id="latitude"
+                        name="latitude"
+                    >
+                    <input
+                        type="hidden"
+                        id="longitude"
+                        name="longitude"
+                    >
+                </div>
+                <!-- =========================================
+                     SECTION C — PHOTO
+                     ========================================= -->
+                <div class="form-section">
+                    <div class="form-section-heading">
+                        <span>
+                            03
+                        </span>
+                        <div>
+                            <h2>
+                                Add evidence
+                            </h2>
+                            <p>
+                                Optional — add a photo of the issue.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Image upload -->
+                    <div class="upload-area">
+                        <label
+                            for="image"
+                            class="upload-label"
+                        >
+                            <span class="upload-icon">
+                                +
+                            </span>
+                            <strong>
+                                Upload photo
+                            </strong>
+                            <small>
+                                JPG / PNG
+                            </small>
+                        </label>
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*"
+                        >
+                    </div>
+                    <!--
+                        script.js uses this container to display
+                        a preview of the selected image.
+                    -->
+                    <div
+                        id="image-preview"
+                        class="image-preview"
+                    ></div>
+                </div>
+                <!-- =========================================
+                     SUBMIT AREA
+                     ========================================= -->
+                <div class="form-submit">
+                    <div class="submit-note">
+                        <span>
+                            *
+                        </span>
+                        Required fields must be completed.
+                    </div>
+                    <button
+                        type="submit"
+                        class="button button-primary submit-button"
+                    >
+                        Submit report →
+                    </button>
+                </div>
+                <!--
+                    JavaScript can use this element to show
+                    success or error messages after submission.
+                -->
+                <div
+                    id="form-message"
+                    class="form-message"
+                    aria-live="polite"
+                ></div>
+            </form>
+        </div>
+    </section>
+</main>
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="footer">
+    <div class="footer-brand">
+        <span class="brand-mark">
+            SR
+        </span>
+        <strong>
+            SmartRoad
+        </strong>
+    </div>
+    <p>
+        Citizen-powered road intelligence.
+    </p>
+    <div class="footer-links">
+        <a href="index.html#report">
+            Report
+        </a>
+        <a href="index.html#traffic">
+            Traffic
+        </a>
+        <a href="index.html#map-section">
+            Map
+        </a>
+        <a href="issues.html">
+            Issues
+        </a>
+    </div>
+</footer>
+<!--
+    Shared SmartRoad JavaScript.
+    This file handles the report form, image preview,
+    browser geolocation and localStorage.
+-->
+<script src="script.js"></script>
+</body>
+</html>
